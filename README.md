@@ -14,6 +14,8 @@ Run any code on the Limelight 3A.
   - [Performance, overclocking, and overheating issues](#performance-overclocking--overheating-issues)
 - [The Limelight's Visionserver](#the-limelights-visionserver)
 - [How to get packages & dependencies on the Limelight](#how-to-get-packages--dependencies-on-the-limelight)
+  - [System packages](#system-packages)
+  - [Python packages](#python-packages)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
