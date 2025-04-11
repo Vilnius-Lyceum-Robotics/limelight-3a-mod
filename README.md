@@ -4,8 +4,13 @@ Run any code on the Limelight 3A.
 
 **DISCLAIMER: This modification is for educational and development purposes only. Modifying a Limelight 3A as described herein may void warranties and potentially violate the rules of FIRST Tech Challenge, or other robotics competitions. Do not use modified Limelights in official competitions without explicit permission from the competition organizers. Vilnius Lyceum Robotics does not endorse or encourage the use of modified hardware in competitive events where such modifications may be against the rules. Users assume all responsibility for any consequences resulting from these modifications.**
 
-# Content ## todo  
-
+# Content
+- [Prerequisites](#prerequisites)
+  - [How to flash firmware](#how-to-flash-firmware)
+- [Gaining root access](#gaining-root-access)
+  - [Accessing `/etc/shadow`](#accessing-etcshadow)
+  - [Modifying `/etc/shadow`](#modifying-etcshadow)
+- [Hardware of the Limelight 3A](#hardware)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
@@ -75,7 +80,7 @@ To mount the parition, first calculate the partition's offset. It is the start b
 $ sudo mkdir /mnt/tmp
 $ sudo mount -o loop,offset=OFFSET /path/to/image.img /mnt/tmp
 ```
-After this, `cd /mnt/tmp` and move to modifying `/etc/shadow`. # TODO LINK
+After this, `cd /mnt/tmp` and move to [modifying `/etc/shadow`](#modifying-etcshadow).
 
 
 ### Method 2: modify the image that is currently on the device
@@ -86,7 +91,7 @@ After this, `cd /mnt/tmp` and move to modifying `/etc/shadow`. # TODO LINK
 ### Method 3: through the Python interface on the Limelight
 This one is the harder one of the bunch to complete. It relies on the SnapScript Python functionality being ran as `root` on the Limelight internally, theoretically giving you access to `root` without modifying the image using conventional methods, possibly staying legal for FTC (keep in mind that the final decision rests with the judges).
 
-Write a Python script to open `/etc/shadow` on runtime and print it out into the console. Then modify it as specified here # TODO LINK and run another script to save the new file contents into the file.  A demo script might be added later on to this doc.
+Write a Python script to open `/etc/shadow` on runtime and print it out into the console. Then modify it as specified [here](#modifying-etcshadow) and run another script to save the new file contents into the file.  A demo script might be added later on to this doc.
 
 ## Modifying `/etc/shadow`
 The contents of `/etc/shadow` will look something like this:
@@ -132,9 +137,27 @@ systemcore:$5$jr/E6z3n9i80i$TIClwpPY2K2XnQxIdTWIK.0hkdb.Q7ZeEtH9/x/FRP6:::::::
 sshd:!*:19746::::::
 ```
 
-If using Method 1, don't forget to flash the modified firmware image onto the Limelight as shown here # TODO LINK.
+If using Method 1, don't forget to flash the modified firmware image onto the Limelight as shown [here](#how-to-flash-firmware).
 
 Done! You now have root access to the Limelight.
+
+
+# Hardware
+The Limelight 3A is really just a Raspberry Pi CM4 Lite module with 1GB of RAM and 8GB of onboard EMMC storage on a simple carrier board that has a camera attached.
+
+The camera is an OV5647 module from the Chinese manufacturer SincereFirst, model no. SF-C5014OV-827B. It is labeled as such:
+```
+SF-AOV
+5647-82
+7B V1.1
+```
+The camera driver is modified on the Limelight's firmware image, meaning you can not just run Raspbian - the open source OV5647 driver does not work with this module. A quick decompilcation of the driver shows that it might be something related to power management.
+
+The Limelight 3A has two LEDs:
+- The yellow LED is connected to GPIO 4
+- The green LED is connected to GPIO 5
+  
+The LED GPIO pins are set up as Output, Pull Up, High as default. The pin value is inverted - high means LED off.
 
 
 
