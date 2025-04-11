@@ -60,6 +60,7 @@ The methods below will help you gain access to the file. You may choose any one 
 
 ### Method 1: modify the firmware image
 You may modify the firmware image's `/etc/shadow` file on the firmware's .img file. 
+
 1. Find the main partition's sector offset.
 ```sh
 $ fdisk -l /path/to/image.img
@@ -79,6 +80,7 @@ image.img1    *         1   131072   131072   64M  c W95 FAT32 (LBA)
 image.img2         131073 15269887 15138815  7.2G 83 Linux
 ```
 You are looking for the start block number of the main Linux partition on the .img file. In my case, it is `131073`. Keep note of the sector size aswell (should be `512 bytes`).
+
 2. Mount the partition
 To mount the parition, first calculate the partition's offset. It is the start block number multiplied by the sector size in bytes (in my case `131073 * 512 = 67109376`).
 ```sh
