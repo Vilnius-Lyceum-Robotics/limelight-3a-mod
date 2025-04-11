@@ -12,7 +12,7 @@ Run *any* code on the Limelight 3A.
   - [Modifying `/etc/shadow`](#modifying-etcshadow)
 - [Hardware of the Limelight 3A](#hardware)
   - [Performance, overclocking, and overheating issues](#performance-overclocking--overheating-issues)
-- [The Limelight's Visionserver](#the-limelights-visionserver)
+- [The Limelight Visionserver](#the-limelight-visionserver)
 - [How to get packages & dependencies on the Limelight](#how-to-get-packages--dependencies-on-the-limelight)
   - [System packages](#system-packages)
   - [Python packages](#python-packages)
@@ -170,7 +170,7 @@ The CPU is directly attached to the aluminum casing using a head pad meaning it'
 While developing, you may shut down the Limelight's Visionserver to save on CPU power and heat: `sudo systemctl stop limelight_visionserver`.
 
 
-# The Limelight's Visionserver
+# The Limelight Visionserver
 The Limelight Visionserver is the main program running the Limelight's camera interface, web server, communication to the Control Hub, vision inference models, etc.
 
 You may find out more about the Visionserver [here](https://www.chiefdelphi.com/uploads/short-url/414FkMFIfllCvDSIVBiesgLFTlS.pdf) (it's from 2019, but most of the things are still true, credit to FRC 696).
