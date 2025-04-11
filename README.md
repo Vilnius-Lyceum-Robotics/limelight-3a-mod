@@ -94,7 +94,7 @@ After this, `cd /mnt/tmp` and move to [modifying `/etc/shadow`](#modifying-etcsh
 2. If your distro automatically mounts drives, the `rootfs` partition will be mounted automatically. Else, mount it manually.
 
 ### Method 3: through the Python interface on the Limelight
-This one is the harder one of the bunch to complete. It relies on the SnapScript Python functionality being ran as `root` on the Limelight internally, theoretically giving you access to `root` without modifying the image using conventional methods, possibly staying legal for FTC (keep in mind that the final decision rests with the judges).
+This one is the harder one of the bunch to complete. It relies on the SnapScript Python functionality being ran as `root` on the Limelight internally, theoretically giving you access to `root` without modifying the image using conventional methods, possibly staying legal for FTC (keep in mind that the final decision rests with the judges at your competitions).
 
 Write a Python script to open `/etc/shadow` on runtime and print it out into the console. Then modify it as specified [here](#modifying-etcshadow) and run another script to save the new file contents into the file.  A demo script might be added later on to this doc.
 
