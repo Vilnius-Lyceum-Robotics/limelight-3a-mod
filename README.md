@@ -55,7 +55,7 @@ $ sudo dd if=/path/to/image.img of=/dev/sda bs=8M status=progress
 SSH is enabled by default on the Limelight 3A's image - the only thing left to do is to change the root password to something you know. You may do that by modifying the entry of the `root` user in `/etc/shadow`.
 
 ## Accessing `/etc/shadow`
-The methods below will help you gain access to the file.
+The methods below will help you gain access to the file. You may choose any one of them, but [Method 2](#method-2-modify-the-image-that-is-currently-on-the-device) is the easiest. [Method 3](#method-3-through-the-python-interface-on-the-limelight) might be the only one that's legal for FTC use.
 
 
 ### Method 1: modify the firmware image
