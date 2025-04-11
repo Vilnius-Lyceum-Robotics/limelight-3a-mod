@@ -81,7 +81,8 @@ image.img2         131073 15269887 15138815  7.2G 83 Linux
 ```
 You are looking for the start block number of the main Linux partition on the .img file. In my case, it is `131073`. Keep note of the sector size aswell (should be `512 bytes`).
 
-2. Mount the partition
+2. Mount the partition.
+
 To mount the parition, first calculate the partition's offset. It is the start block number multiplied by the sector size in bytes (in my case `131073 * 512 = 67109376`).
 ```sh
 $ sudo mkdir /mnt/tmp
