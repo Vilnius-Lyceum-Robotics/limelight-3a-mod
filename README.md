@@ -11,6 +11,7 @@ Run any code on the Limelight 3A.
   - [Accessing `/etc/shadow`](#accessing-etcshadow)
   - [Modifying `/etc/shadow`](#modifying-etcshadow)
 - [Hardware of the Limelight 3A](#hardware)
+  - [Performance, overclocking, and overheating issues](#performance-overclocking--overheating-issues)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
@@ -157,7 +158,9 @@ The Limelight 3A has two LEDs:
 - The yellow LED is connected to GPIO 4
 - The green LED is connected to GPIO 5
   
-The LED GPIO pins are set up as Output, Pull Up, High as default. The pin value is inverted - high means LED off.
+The LED GPIO pins are set up as Output, Pull Up, High as default. The pin value is inverted - high means LED off
 
+## Performance, overclocking & overheating issues
+The CPU is directly attached to the aluminum casing using a head pad meaning it's got decent enough cooling to be overclocked to squeeze more performance out of it. 2.05 GHz worked great for us, and would be fine for at least 5-10 minutes of the CPU running at full utilization until the casing got too hot to touch. You may find out more about overclocking the CM4 [here](https://www.jeffgeerling.com/blog/2020/overclocking-raspberry-pi-compute-module-4).
 
-
+While developing, you may shut down the Limelight's visionserver to save on CPU power and heat: `sudo systemctl stop limelight_visionserver`.
