@@ -12,6 +12,8 @@ Run any code on the Limelight 3A.
   - [Modifying `/etc/shadow`](#modifying-etcshadow)
 - [Hardware of the Limelight 3A](#hardware)
   - [Performance, overclocking, and overheating issues](#performance-overclocking--overheating-issues)
+- [The Limelight's Visionserver](#the-limelights-visionserver)
+- [How to get packages & dependencies on the Limelight](#how-to-get-packages--dependencies-on-the-limelight)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
@@ -163,4 +165,25 @@ The LED GPIO pins are set up as Output, Pull Up, High as default. The pin value 
 ## Performance, overclocking & overheating issues
 The CPU is directly attached to the aluminum casing using a head pad meaning it's got decent enough cooling to be overclocked to squeeze more performance out of it. 2.05 GHz worked great for us, and would be fine for at least 5-10 minutes of the CPU running at full utilization until the casing got too hot to touch. You may find out more about overclocking the CM4 [here](https://www.jeffgeerling.com/blog/2020/overclocking-raspberry-pi-compute-module-4).
 
-While developing, you may shut down the Limelight's visionserver to save on CPU power and heat: `sudo systemctl stop limelight_visionserver`.
+While developing, you may shut down the Limelight's Visionserver to save on CPU power and heat: `sudo systemctl stop limelight_visionserver`.
+
+
+# The Limelight's Visionserver
+The Limelight Visionserver is the main program running the Limelight's camera interface, web server, communication to the Control Hub, vision inference models, etc.
+
+You may find out more about the Visionserver [here](https://www.chiefdelphi.com/uploads/short-url/414FkMFIfllCvDSIVBiesgLFTlS.pdf) (it's from 2019, but most of the things are still true, credit to FRC 696).
+
+In general, these are the most important facts:
+- The raw camera stream can be accessed on HTTP port 5802, and the camera stream with overlays (FPS counter, pipelines, etc.) on HTTP port 5800.
+- The web interface runs on HTTP port 5801.
+- A websocket server runs on 5805. Through it you may get real time detection information, crosshair info, etc.
+
+
+# How to get packages & dependencies on the Limelight
+Getting dependencies on the Limelight isn't as straightforward as it seems at first. The firmware image does not have SSL, meaning that even if you forward your internet connection it won't be able to pull most (if not all) package libraries (including Python's pip). 
+
+## System packages
+To work around this issue for system packages, I just downloaded the appropriate .deb package files from the Debian package repository on my local machine, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done.
+
+## Python packages
+To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in `scripts/pip_proxy.py` in this repository. # TODO upload script
