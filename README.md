@@ -1,6 +1,6 @@
 # limelight-3a-mod
 
-Run any code on the Limelight 3A.
+Run *any* code on the Limelight 3A.
 
 **DISCLAIMER: This modification is for educational and development purposes only. Modifying a Limelight 3A as described herein may void warranties and potentially violate the rules of FIRST Tech Challenge, or other robotics competitions. Do not use modified Limelights in official competitions without explicit permission from the competition organizers. Vilnius Lyceum Robotics does not endorse or encourage the use of modified hardware in competitive events where such modifications may be against the rules. Users assume all responsibility for any consequences resulting from these modifications.**
 
