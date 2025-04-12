@@ -191,7 +191,7 @@ Getting dependencies on the Limelight isn't as straightforward as it seems at fi
 To work around this issue for system packages, I just downloaded the appropriate .deb package files from the Debian package repository on my local machine, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done.
 
 ## Python packages
-To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/scripts/pip_proxy.py) in this repository. # TODO upload script.
+To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) in this repository. # TODO upload script.
 
 After running the script on your local machine, you may pull pip packages normally by running `$ sudo pip install --index-url http://PC_IP:8000/simple/ PACKAGE`. Keep in mind that `pip` is not installed by default, but running `$ sudo python get-pip.py` will install it.
 
