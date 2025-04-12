@@ -189,9 +189,13 @@ In general, these are the most important facts:
 Getting dependencies on the Limelight isn't as straightforward as it seems at first. The firmware image does not have the libraries required for SSL connections, meaning that even if you forward your internet connection it won't be able to pull most (if not all) package libraries (including Python's pip). 
 
 ## System packages
-To work around this issue for system packages, I just downloaded the appropriate .deb package files from the Debian package repository on my local machine, extract the archive, got the individual files, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done. 
+To work around this issue for system packages, I just downloaded the appropriate .deb package files for Debian 12 from the Debian package repository on my local machine, extract the archive, got the individual files, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done. 
+
+
+The actual Limelight firmware is running on a custom version of Buildroot, but Debian packages work just fine on it.
 
 It might be faster to install a package manager like `apt` and find a non-secure mirror / write a Python proxy similar to [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) than to manually install the libraries like I did.
+
 
 ## Python packages
 To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) in this repository. 
