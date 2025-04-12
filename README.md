@@ -16,6 +16,7 @@ Run *any* code on the Limelight 3A.
 - [How to get packages & dependencies on the Limelight](#how-to-get-packages--dependencies-on-the-limelight)
   - [System packages](#system-packages)
   - [Python packages](#python-packages)
+  - [Access the internet with the Limelight](#access-the-internet-with-the-limelight)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
@@ -188,11 +189,35 @@ In general, these are the most important facts:
 Getting dependencies on the Limelight isn't as straightforward as it seems at first. The firmware image does not have SSL, meaning that even if you forward your internet connection it won't be able to pull most (if not all) package libraries (including Python's pip). 
 
 ## System packages
-To work around this issue for system packages, I just downloaded the appropriate .deb package files from the Debian package repository on my local machine, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done.
+To work around this issue for system packages, I just downloaded the appropriate .deb package files from the Debian package repository on my local machine, extract the archive, got the individual files, and used `$ python3 -m http.server` to start a local HTTP server and `wget` on the Limelight to pull the files onto it. It's not the best way, and it's a pain for packages that require many dependencies, but it gets the job done. 
+
+It might be faster to install a package manager like `apt` and find a non-secure mirror / write a Python proxy similar to [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) than to manually install the libraries like I did.
 
 ## Python packages
-To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) in this repository. # TODO upload script.
+To pull Python packages, I created a simple script in Python that acts as a sort of proxy to pull the packages from HTTPS sources. You can find the script in [`scripts/pip_proxy.py`](https://github.com/Vilnius-Lyceum-Robotics/limelight-3a-mod/blob/master/scripts/pip_proxy.py) in this repository. 
 
-After running the script on your local machine, you may pull pip packages normally by running `$ sudo pip install --index-url http://PC_IP:8000/simple/ PACKAGE`. Keep in mind that `pip` is not installed by default, but running `$ sudo python get-pip.py` will install it.
+Since there are no non-HTTPS pip mirrors available (maybe I didn't look hard enough), this script is one of the ways you can avoid having to manually download and install packages. It might be worth looking into some sort of a reverse proxy setup if you want to do this properly, or even hosting your own pip mirror.
+
+After running the script on your local machine, you may pull pip packages normally by running `$ sudo python3 -m pip install --index-url http://PC_IP:8000/simple/ PACKAGE`. Keep in mind that `pip` is not installed by default, but running `$ sudo python3 get-pip.py` will install it.
 
 Remember that the Python SnapScript interface on the Limelight runs on `root`, so if you are planning to install additional Python packages for use via the Visionserver, you should install them as `root` aswell.
+
+## Access the internet with the Limelight
+If for some reason you require to access the internet through your Limelight directly, you may forward the host PC's internet connection like this:
+
+1. On the host:
+```sh
+$ # Enable IP forwarding
+$ sudo sysctl -w net.ipv4.ip_forward=1 
+$ # Set up NAT for the CM4's network
+$ sudo iptables -t nat -A POSTROUTING -s 172.29.0.0/24 -o YOUR_INTERFACE -j MASQUERADE
+```
+Set `YOUR_INTERFACE` to the interface facing the open network on your host, e.g. `wlp0s20f3`.
+
+2. On the Limelight:
+```sh
+$ # Add a default route going to the host PC (keep in mind your PC's address might differ)
+$ sudo ip route add default via 172.29.0.21
+$ # Add DNS servers
+$ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+```
