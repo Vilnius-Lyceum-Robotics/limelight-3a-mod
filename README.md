@@ -169,7 +169,7 @@ The Limelight 3A has two LEDs:
 The LED GPIO pins are set up as Output, Pull Up, High as default. The pin value is inverted - high means LED off
 
 ## Performance, overclocking & overheating issues
-The CPU is directly attached to the aluminum casing using a head pad meaning it's got decent enough cooling to be overclocked to squeeze more performance out of it. 2.05 GHz worked great for us, and would be fine for at least 5-10 minutes of the CPU running at full utilization until the casing got too hot to touch. You may find out more about overclocking the CM4 [here](https://www.jeffgeerling.com/blog/2020/overclocking-raspberry-pi-compute-module-4).
+The CPU is directly attached to the aluminum casing using a thermal conductive pad meaning it's got decent enough cooling to be overclocked to squeeze more performance out of it. 2.05 GHz worked great for us, and would be fine for at least 5-10 minutes of the CPU running at full utilization until the casing got too hot to touch. You may find out more about overclocking the CM4 [here](https://www.jeffgeerling.com/blog/2020/overclocking-raspberry-pi-compute-module-4).
 
 While developing, you may shut down the Limelight's Visionserver to save on CPU power and heat: `sudo systemctl stop limelight_visionserver`.
 
@@ -203,6 +203,8 @@ To pull Python packages, I created a simple script in Python that acts as a sort
 Since there are no non-HTTPS pip mirrors available (maybe I didn't look hard enough), this script is one of the ways you can avoid having to manually download and install packages. It might be worth looking into some sort of a reverse proxy setup if you want to do this properly, or even hosting your own pip mirror.
 
 After running the script on your local machine, you may pull pip packages normally by running `$ sudo python3 -m pip install --index-url http://PC_IP:8000/simple/ PACKAGE`. Keep in mind that `pip` is not installed by default, but running `$ sudo python3 get-pip.py` will install it.
+
+The script is most definitely not perfect - it tends to time out when downloading bigger packages. Restarting the install on the Limelight fixes it though, since the packages are cached by the script.
 
 Remember that the Python SnapScript interface on the Limelight runs on `root`, so if you are planning to install additional Python packages for use via the Visionserver, you should install them as `root` aswell.
 
