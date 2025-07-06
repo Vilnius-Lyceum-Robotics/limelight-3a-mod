@@ -17,6 +17,7 @@ Run *any* code on the Limelight 3A.
   - [System packages](#system-packages)
   - [Python packages](#python-packages)
   - [Access the internet with the Limelight](#access-the-internet-with-the-limelight)
+- [Communication with the Control Hub](#communication-with-the-control-hub)
 
 # Prerequisites
 - Limelight 3A with the official firmware image (using 2025.1 here)
