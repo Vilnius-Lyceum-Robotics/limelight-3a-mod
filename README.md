@@ -232,6 +232,6 @@ $ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 
 # Communication with the Control Hub
 
-The Limelight firmware image uses the CM4 in USB device mode acting as an Ethernet adapter. That means that the Control Hub is just using IP packets yo communicate with it (specifically HTTP, you can check the source of the driver).
+The Limelight firmware image uses the CM4 in USB device mode acting as an Ethernet adapter. That means that the Control Hub is just using IP packets to communicate with it (specifically HTTP, you can check the source of the driver).
 
 We wrote our own driver for our own software, which you can find [here](https://github.com/Vilnius-Lyceum-Robotics/into-the-deep-fullauto/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/subsystems/limelight/LimelightYoloReader.java).
