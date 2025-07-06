@@ -95,7 +95,7 @@ After this, `cd /mnt/tmp` and move to [modifying `/etc/shadow`](#modifying-etcsh
 ### Method 2: modify the image that is currently on the device
 1. Plug the Limelight into your computer while holding the blue button on the front of the device to put it into USB bootloader mode, then run `$ sudo rpiboot`.
 
-2. If your distro automatically mounts drives, the `rootfs` partition will be mounted automatically. Else, mount it manually.
+2. If your distro automatically mounts drives, the `rootfs` ext4 partition will be mounted automatically. Else, mount it manually.
 
 ### Method 3: through the Python interface on the Limelight
 This one is the harder one of the bunch to complete. It relies on the SnapScript Python functionality being ran as `root` on the Limelight internally, theoretically giving you access to `root` without modifying the image using conventional methods, possibly staying legal for FTC (keep in mind that the final decision rests with the judges at your competitions).
@@ -227,3 +227,10 @@ $ sudo ip route add default via 172.29.0.21
 $ # Add DNS servers
 $ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 ```
+
+
+# Communication with the Control Hub
+
+The Limelight firmware image uses the CM4 in USB device mode acting as an Ethernet adapter. That means that the Control Hub is just using IP packets yo communicate with it (specifically HTTP, you can check the source of the driver).
+
+We wrote our own driver for our own software, which you can find [here](https://github.com/Vilnius-Lyceum-Robotics/into-the-deep-fullauto/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/subsystems/limelight/LimelightYoloReader.java).
